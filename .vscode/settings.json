@@ -1,0 +1,8 @@
+{
+    "files.associations": {
+        "memory": "cpp",
+        "condition_variable": "cpp",
+        "qtcore": "cpp",
+        "qtdbus": "cpp"
+    }
+}

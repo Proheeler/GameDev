@@ -3,6 +3,9 @@
         "memory": "cpp",
         "condition_variable": "cpp",
         "qtcore": "cpp",
-        "qtdbus": "cpp"
+        "qtdbus": "cpp",
+        "*.tcc": "cpp",
+        "compare": "cpp",
+        "type_traits": "cpp"
     }
 }

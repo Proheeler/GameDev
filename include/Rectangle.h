@@ -7,6 +7,10 @@ public:
     Rectangle(int width, int height);
     void draw(SDL_Renderer *renderer, RGBColor const &color) override;
     void update(Window &window) override;
+    void moveUp(Window &window);
+    void moveDown(Window &window);
+    void moveLeft(Window &window);
+    void moveRight(Window &window);
 
 private:
     int m_width;

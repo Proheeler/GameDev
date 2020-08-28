@@ -8,7 +8,6 @@
 #include <RGBColor.h>
 #include <Window.h>
 
-
 class Framework
 {
 public:
@@ -50,12 +49,12 @@ int main(int argc, char *argv[])
     Framework fw(1000, 1000);
 
     // Calling the function that draws circle.
-    // fw.draw_circle(200, 100, 50);
     Circle m(20, 500, 500);
     RGBColor color{255, 0, 0, 255};
+    RGBColor rect_color{50, 255, 100, 255};
     m.draw(fw.getRenderer(), color);
-    Rectangle rect(100,100,10,10);
-    rect.draw(fw.getRenderer(),color);
+    Rectangle rect(100, 20, w.width / 2 - 100 / 2, w.height - 20);
+    rect.draw(fw.getRenderer(), rect_color);
     SDL_Event event; // Event variable
 
     // Below while loop checks if the window has terminated using close in the
@@ -64,11 +63,37 @@ int main(int argc, char *argv[])
     {
         SDL_Delay(10);         // setting some Delay
         SDL_PollEvent(&event); // Catching the poll event.
-        SDL_RenderClear(fw.getRenderer());
-        m.update(w);
-        m.draw(fw.getRenderer(), color);
-        rect.draw(fw.getRenderer(),color);
-    }
+        switch (event.type)
+        {
+        case SDL_KEYDOWN:
+            // keyboard API for key pressed
+            switch (event.key.keysym.scancode)
+            {
+            case SDL_SCANCODE_W:
+            case SDL_SCANCODE_UP:
+                rect.moveUp(w);
+                break;
+            case SDL_SCANCODE_A:
+            case SDL_SCANCODE_LEFT:
+                rect.moveLeft(w);
+                break;
+            case SDL_SCANCODE_S:
+            case SDL_SCANCODE_DOWN:
+                rect.moveDown(w);
+                break;
+            case SDL_SCANCODE_D:
+            case SDL_SCANCODE_RIGHT:
+                rect.moveRight(w);
+                break;
+            }
+        }
+    
+
+    SDL_RenderClear(fw.getRenderer());
+    m.update(w);
+    m.draw(fw.getRenderer(), color);
+    rect.draw(fw.getRenderer(), rect_color);
+}
 }
 // int main()
 // {

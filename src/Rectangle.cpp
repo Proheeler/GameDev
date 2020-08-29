@@ -21,7 +21,7 @@ void Rectangle::draw(SDL_Renderer *renderer, RGBColor const &color)
 
     // Show the change on the screen
     SDL_RenderFillRect(renderer, &r);
-    SDL_RenderPresent(renderer);
+    // SDL_RenderPresent(renderer);
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
 }
 void Rectangle::update(Window &window)
@@ -46,4 +46,21 @@ void Rectangle::moveRight(Window &window)
 {
     if (m_posX + m_speedX + m_width <= window.width)
         m_posX += m_speedX;
+}
+
+int Rectangle::x()
+{
+    return m_posX;
+}
+int Rectangle::y()
+{
+    return m_posY;
+}
+int Rectangle::width()
+{
+    return m_width;
+}
+int Rectangle::height()
+{
+    return m_height;
 }

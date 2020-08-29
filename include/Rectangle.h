@@ -1,6 +1,6 @@
 #pragma once
 #include "IShape.h"
-class Rectangle:public IShape
+class Rectangle : public IShape
 {
 public:
     Rectangle(int width, int height, int posX, int posY);
@@ -11,12 +11,16 @@ public:
     void moveDown(Window &window);
     void moveLeft(Window &window);
     void moveRight(Window &window);
+    int x();
+    int y();
+    int width();
+    int height();
+    int m_speedX = 10;
+    int m_speedY = 20;
 
 private:
     int m_width;
     int m_height;
     int m_posX;
     int m_posY;
-    int m_speedX = 10;
-    int m_speedY = 20;
 };

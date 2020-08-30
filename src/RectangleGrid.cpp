@@ -2,7 +2,7 @@
 #include <iostream>
 RectangleGrid::RectangleGrid(Window w, int rows, int cols) : m_rows(rows), m_cols(cols)
 {
-    int offset = 2;
+    int offset = 1;
     int width = w.width / cols;
     int height = w.height / (2 * rows);
     for (int i = 0; i < cols; ++i)

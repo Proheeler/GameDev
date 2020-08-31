@@ -10,8 +10,6 @@ Circle::Circle(int radius, int posX, int posY) : m_radius(radius), m_posX(posX),
 void Circle::draw(SDL_Renderer *renderer, RGBColor const &color)
 {
     SDL_SetRenderDrawColor(renderer, color.r_channel, color.g_channel, color.b_channel, color.a_channel);
-
-    // Drawing circle
     for (int x = m_posX - m_radius; x <= m_posX + m_radius; x++)
     {
         for (int y = m_posY - m_radius; y <= m_posY + m_radius; y++)
@@ -23,9 +21,6 @@ void Circle::draw(SDL_Renderer *renderer, RGBColor const &color)
             }
         }
     }
-
-    // Show the change on the screen
-    // SDL_RenderPresent(renderer);
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
 }
 void Circle::update(Window &window)
@@ -34,7 +29,7 @@ void Circle::update(Window &window)
     {
         m_speedX = -m_speedX;
     }
-    if (m_posY + m_radius >= window.height || m_posY + m_radius <= 0)
+    if (m_posY  >= window.height || m_posY + m_radius <= 0)
     {
         m_speedY = -m_speedY;
     }

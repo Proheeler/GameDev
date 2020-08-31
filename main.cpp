@@ -2,13 +2,42 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_timer.h>
-
+#include <SDL2/SDL_ttf.h>
+// #include <SDL2/>
 #include <Rectangle.h>
 #include <Circle.h>
 #include <RGBColor.h>
 #include <Window.h>
 #include <RectangleGrid.h>
 #include <Collisions.h>
+#include <GameParameters.h>
+#include <iostream>
+void renderText(SDL_Renderer *renderer, Window &w)
+{
+    TTF_Font *font = TTF_OpenFont("/home/dev/development/sdlDev/assets/fonts/KaBlamUnder.ttf", 24);
+    if (font != NULL)
+    {
+        std::string score_text = "score: " + std::to_string(10);
+        SDL_Color textColor = {255, 255, 255, 0};
+        SDL_Surface *textSurface = TTF_RenderText_Solid(font, score_text.c_str(), textColor);
+        SDL_Texture *text = SDL_CreateTextureFromSurface(renderer, textSurface);
+        int text_width = textSurface->w;
+        int text_height = textSurface->h;
+        SDL_FreeSurface(textSurface);
+        SDL_Rect renderQuad = {20, w.height - 30, text_width, text_height};
+        SDL_RenderCopy(renderer, text, NULL, &renderQuad);
+        SDL_DestroyTexture(text);
+        TTF_CloseFont(font);
+
+    }
+    else
+    {
+        fprintf(stderr, "error: font not found\n");
+        exit(EXIT_FAILURE);
+    }
+    
+}
+
 class Framework
 {
 public:
@@ -44,25 +73,28 @@ private:
 
 int main(int argc, char *argv[])
 {
-
+    TTF_Init();
     // Creating the object by passing Height and Width value.
-    Window w{1000, 1000};
-    Framework fw(1000, 1000);
+    Window w{GameParameters::windowSize.x, GameParameters::windowSize.y};
+    Framework fw(w.width, w.height);
 
     // Calling the function that draws circle.
-    Circle m(20, 500, 500);
+    Circle m(GameParameters::ballRadius, GameParameters::circlePos.x, GameParameters::circlePos.y);
     RGBColor color{255, 0, 0, 255};
     RGBColor rect_color{50, 255, 100, 255};
     m.draw(fw.getRenderer(), color);
-    Rectangle rect(200, 50, w.width / 2 - 100 / 2, w.height - 20);
+    Rectangle rect(GameParameters::paddleSize.x,
+                   GameParameters::paddleSize.y,
+                   GameParameters::paddlePos.x,
+                   GameParameters::windowSize.y - GameParameters::paddleSize.y);
     rect.draw(fw.getRenderer(), rect_color);
     SDL_Event event; // Event variable
-    RectangleGrid grid(w,10,10);
+    RectangleGrid grid(w, GameParameters::gridSize.x, GameParameters::gridSize.y);
     // Below while loop checks if the window has terminated using close in the
     //  corner.
     while (!(event.type == SDL_QUIT))
     {
-        SDL_Delay(20);         // setting some Delay
+        SDL_Delay(0);          // setting some Delay
         SDL_PollEvent(&event); // Catching the poll event.
         switch (event.type)
         {
@@ -88,16 +120,20 @@ int main(int argc, char *argv[])
                 break;
             }
         }
-    
-
-    
-    m.update(w);
-    grid.draw(fw.getRenderer());
-    m.draw(fw.getRenderer(), color);
-    rect.draw(fw.getRenderer(), rect_color);
-    SDL_RenderPresent(fw.getRenderer());
-    SDL_RenderClear(fw.getRenderer());
-    checkCollision(m,grid);
-    checkCollision(m,rect);
-}   
+        if (grid.getRects()->empty())
+        {
+            SDL_RenderClear(fw.getRenderer());
+            renderText(fw.getRenderer(), w);
+            SDL_RenderPresent(fw.getRenderer());
+            continue;
+        }
+        m.update(w);
+        grid.draw(fw.getRenderer());
+        m.draw(fw.getRenderer(), color);
+        rect.draw(fw.getRenderer(), rect_color);
+        SDL_RenderPresent(fw.getRenderer());
+        SDL_RenderClear(fw.getRenderer());
+        checkCollision(m, grid);
+        checkCollision(m, rect);
+    }
 }

@@ -2,6 +2,7 @@
 #include <algorithm>
 #include <iostream>
 #include <cmath>
+#include <GameParameters.h>
 namespace
 {
     template <typename T>
@@ -16,7 +17,7 @@ namespace
     bool isIntersecting(Circle &circle, Rectangle rectangle) noexcept
     {
         auto DeltaX = circle.x() - std::max(rectangle.x(), std::min(circle.x(), rectangle.x() + +rectangle.width()));
-        auto DeltaY = circle.y() - std::max(rectangle.y(), std::min(circle.y(), rectangle.y() + +rectangle.height()));
+        auto DeltaY = circle.y() - std::max(rectangle.y(), std::min(circle.y(), rectangle.y() + rectangle.height()));
         bool ret = (DeltaX * DeltaX + DeltaY * DeltaY) < (circle.radius() * circle.radius());
         return ret;
     }

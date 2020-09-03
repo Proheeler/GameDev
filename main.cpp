@@ -12,19 +12,20 @@
 #include <Collisions.h>
 #include <GameParameters.h>
 #include <iostream>
+#include <HorizontalMoving.h>
 void renderText(SDL_Renderer *renderer, Window &w)
 {
-    TTF_Font *font = TTF_OpenFont("/home/dev/development/sdlDev/assets/fonts/KaBlamUnder.ttf", 24);
+    TTF_Font *font = TTF_OpenFont("/home/dev/development/sdlDev/assets/fonts/KaBlamUnder.ttf", 14);
     if (font != NULL)
     {
-        std::string score_text = "score: " + std::to_string(10);
+        std::string score_text = "GA";
         SDL_Color textColor = {255, 255, 255, 0};
         SDL_Surface *textSurface = TTF_RenderText_Solid(font, score_text.c_str(), textColor);
         SDL_Texture *text = SDL_CreateTextureFromSurface(renderer, textSurface);
         int text_width = textSurface->w;
         int text_height = textSurface->h;
         SDL_FreeSurface(textSurface);
-        SDL_Rect renderQuad = {20, w.height - 30, text_width, text_height};
+        SDL_Rect renderQuad = { GameParameters::windowSize.x/2, GameParameters::windowSize.y/2,200,14};
         SDL_RenderCopy(renderer, text, NULL, &renderQuad);
         SDL_DestroyTexture(text);
         TTF_CloseFont(font);
@@ -87,6 +88,8 @@ int main(int argc, char *argv[])
                    GameParameters::paddleSize.y,
                    GameParameters::paddlePos.x,
                    GameParameters::windowSize.y - GameParameters::paddleSize.y);
+    HorizontalMoving mp(&rect,{GameParameters::paddleSpeed.x,GameParameters::paddleSpeed.x});
+    rect.setMovePolicy(&mp);
     rect.draw(fw.getRenderer(), rect_color);
     SDL_Event event; // Event variable
     RectangleGrid grid(w, GameParameters::gridSize.x, GameParameters::gridSize.y);
@@ -94,7 +97,7 @@ int main(int argc, char *argv[])
     //  corner.
     while (!(event.type == SDL_QUIT))
     {
-        SDL_Delay(0);          // setting some Delay
+        SDL_Delay(10);          // setting some Delay
         SDL_PollEvent(&event); // Catching the poll event.
         switch (event.type)
         {

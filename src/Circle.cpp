@@ -3,21 +3,21 @@
 #include <cmath>
 #include <Window.h>
 #include <RGBColor.h>
-Circle::Circle(int radius) : m_radius(radius), m_posX(0), m_posY(0) {}
-Circle::Circle(int radius, int posX, int posY) : m_radius(radius), m_posX(posX), m_posY(posY)
+Circle::Circle(int radius) : IShape(0,0,2*radius,2*radius),m_radius(radius) {}
+Circle::Circle(int radius, int posX, int posY) : IShape(posX,posY,2*radius,2*radius),m_radius(radius)
 {
 }
 void Circle::draw(SDL_Renderer *renderer, RGBColor const &color)
 {
     SDL_SetRenderDrawColor(renderer, color.r_channel, color.g_channel, color.b_channel, color.a_channel);
-    for (int x = m_posX - m_radius; x <= m_posX + m_radius; x++)
+    for (int i = x() - m_radius; i <= x() + m_radius; i++)
     {
-        for (int y = m_posY - m_radius; y <= m_posY + m_radius; y++)
+        for (int j = y() - m_radius; j <= y() + m_radius; j++)
         {
-            if ((std::pow(m_posY - y, 2) + std::pow(m_posX - x, 2)) <=
+            if ((std::pow(y() - j, 2) + std::pow(x() - i, 2)) <=
                 std::pow(m_radius, 2))
             {
-                SDL_RenderDrawPoint(renderer, x, y);
+                SDL_RenderDrawPoint(renderer, i, j);
             }
         }
     }
@@ -25,24 +25,16 @@ void Circle::draw(SDL_Renderer *renderer, RGBColor const &color)
 }
 void Circle::update(Window &window)
 {
-    if (m_posX + m_radius >= window.width || m_posX - m_radius <= 0)
+    if (x() + m_radius >= window.width || x() - m_radius <= 0)
     {
         m_speedX = -m_speedX;
     }
-    if (m_posY  >= window.height || m_posY + m_radius <= 0)
+    if (y()  >= window.height || y() + m_radius <= 0)
     {
         m_speedY = -m_speedY;
     }
-    m_posX += m_speedX;
-    m_posY += m_speedY;
-}
-int Circle::x()
-{
-    return m_posX;
-}
-int Circle::y()
-{
-    return m_posY;
+    setX(x()+m_speedX);
+    setY(y()+m_speedY);
 }
 int Circle::radius()
 {

@@ -4,20 +4,23 @@
 #include <cmath>
 #include <Window.h>
 #include <RGBColor.h>
-Rectangle::Rectangle(int width, int height) : m_width(width), m_height(height), m_posX(0), m_posY(0) {}
-Rectangle::Rectangle(int width, int height, int posX, int posY) : m_width(width), m_height(height), m_posX(posX), m_posY(posY)
+
+Rectangle::Rectangle(int width, int height) : IShape(0,0,width,height) {}
+
+
+Rectangle::Rectangle(int width, int height, int posX, int posY) : IShape(posX,posY,width,height)
 {
 }
+
 void Rectangle::draw(SDL_Renderer *renderer, RGBColor const &color)
 {
     SDL_SetRenderDrawColor(renderer, color.r_channel, color.g_channel, color.b_channel, color.a_channel);
 
-    // Drawing circle
     SDL_Rect r;
-    r.x = m_posX;
-    r.y = m_posY;
-    r.w = m_width;
-    r.h = m_height;
+    r.x = x();
+    r.y = y();
+    r.w = width();
+    r.h = height();
 
     // Show the change on the screen
     SDL_RenderFillRect(renderer, &r);
@@ -27,40 +30,27 @@ void Rectangle::draw(SDL_Renderer *renderer, RGBColor const &color)
 void Rectangle::update(Window &window)
 {
 }
+
 void Rectangle::moveUp(Window &window)
 {
-    // if (m_posY - m_speedY + m_height > 0)
-    //     m_posY -= m_speedY;
+    movePolicy->moveUp(window);
 }
+
 void Rectangle::moveDown(Window &window)
 {
-    // if (m_posY + m_speedY + m_height<= window.height )
-    //     m_posY += m_speedY;
+    movePolicy->moveDown(window);
 }
+
 void Rectangle::moveLeft(Window &window)
 {
-    if (m_posX - m_speedX > 0)
-        m_posX -= m_speedX;
+    movePolicy->moveLeft(window);
 }
 void Rectangle::moveRight(Window &window)
 {
-    if (m_posX + m_speedX + m_width <= window.width)
-        m_posX += m_speedX;
+    movePolicy->moveRight(window);
 }
 
-int Rectangle::x()
+void Rectangle::setMovePolicy(IMovable *value)
 {
-    return m_posX;
-}
-int Rectangle::y()
-{
-    return m_posY;
-}
-int Rectangle::width()
-{
-    return m_width;
-}
-int Rectangle::height()
-{
-    return m_height;
+    movePolicy = value;
 }

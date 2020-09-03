@@ -1,5 +1,7 @@
 #pragma once
 #include "IShape.h"
+#include "IMovable.h"
+
 class Rectangle : public IShape
 {
 public:
@@ -11,16 +13,12 @@ public:
     void moveDown(Window &window);
     void moveLeft(Window &window);
     void moveRight(Window &window);
-    int x();
-    int y();
-    int width();
-    int height();
+
     int m_speedX = 10;
     int m_speedY = 20;
 
+    void setMovePolicy(IMovable *value);
+
 private:
-    int m_width;
-    int m_height;
-    int m_posX;
-    int m_posY;
+    IMovable* movePolicy;
 };

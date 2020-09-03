@@ -32,3 +32,11 @@ int IShape::height()
 {
     return m_height;
 }
+void IShape::setColor(RGBColor color)
+{
+    m_color = color;
+}
+RGBColor IShape::getColor()
+{
+    return m_color;
+}

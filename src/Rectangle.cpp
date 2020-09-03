@@ -12,9 +12,9 @@ Rectangle::Rectangle(int width, int height, int posX, int posY) : IShape(posX,po
 {
 }
 
-void Rectangle::draw(SDL_Renderer *renderer, RGBColor const &color)
+void Rectangle::draw(SDL_Renderer *renderer)
 {
-    SDL_SetRenderDrawColor(renderer, color.r_channel, color.g_channel, color.b_channel, color.a_channel);
+    SDL_SetRenderDrawColor(renderer, getColor().r_channel, getColor().g_channel, getColor().b_channel, getColor().a_channel);
 
     SDL_Rect r;
     r.x = x();
@@ -33,24 +33,24 @@ void Rectangle::update(Window &window)
 
 void Rectangle::moveUp(Window &window)
 {
-    movePolicy->moveUp(window);
+    m_movePolicy->moveUp(window);
 }
 
 void Rectangle::moveDown(Window &window)
 {
-    movePolicy->moveDown(window);
+    m_movePolicy->moveDown(window);
 }
 
 void Rectangle::moveLeft(Window &window)
 {
-    movePolicy->moveLeft(window);
+    m_movePolicy->moveLeft(window);
 }
 void Rectangle::moveRight(Window &window)
 {
-    movePolicy->moveRight(window);
+    m_movePolicy->moveRight(window);
 }
 
 void Rectangle::setMovePolicy(IMovable *value)
 {
-    movePolicy = value;
+    m_movePolicy = value;
 }

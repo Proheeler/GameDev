@@ -7,9 +7,9 @@ Circle::Circle(int radius) : IShape(0,0,2*radius,2*radius),m_radius(radius) {}
 Circle::Circle(int radius, int posX, int posY) : IShape(posX,posY,2*radius,2*radius),m_radius(radius)
 {
 }
-void Circle::draw(SDL_Renderer *renderer, RGBColor const &color)
+void Circle::draw(SDL_Renderer *renderer)
 {
-    SDL_SetRenderDrawColor(renderer, color.r_channel, color.g_channel, color.b_channel, color.a_channel);
+    SDL_SetRenderDrawColor(renderer, getColor().r_channel, getColor().g_channel, getColor().b_channel, getColor().a_channel);
     for (int i = x() - m_radius; i <= x() + m_radius; i++)
     {
         for (int j = y() - m_radius; j <= y() + m_radius; j++)

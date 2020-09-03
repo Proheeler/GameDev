@@ -1,5 +1,6 @@
 #include <RectangleGrid.h>
 #include <iostream>
+#include <cstdlib>
 RectangleGrid::RectangleGrid(Window w, int rows, int cols) : m_rows(rows), m_cols(cols)
 {
     int offset = 1;
@@ -9,16 +10,19 @@ RectangleGrid::RectangleGrid(Window w, int rows, int cols) : m_rows(rows), m_col
     {
         for (int j = 0; j < rows; ++j)
         {
-            m_rects.push_back(Rectangle(width - offset, height - offset, width * i, j * height));
+            Rectangle tmpRect(width - offset, height - offset, width * i, j * height);
+            RGBColor rect_color{(rand() % 255) + 1, (rand() % 255) + 1, (rand() % 255) + 1};
+            tmpRect.setColor(rect_color);
+            m_rects.push_back(tmpRect);
         }
     }
 }
 void RectangleGrid::draw(SDL_Renderer *w)
 {
-    RGBColor rect_color{255, 255, 100, 255};
+
     for (auto &it : m_rects)
     {
-        it.draw(w, rect_color);
+        it.draw(w);
     }
 }
 std::vector<Rectangle> *RectangleGrid::getRects()

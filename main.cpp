@@ -13,6 +13,10 @@
 #include <GameParameters.h>
 #include <iostream>
 #include <HorizontalMoving.h>
+
+constexpr const int FPS = 60;
+constexpr const int Delay = 1000.0 / FPS;
+
 void renderText(SDL_Renderer *renderer, Window &w)
 {
     TTF_Font *font = TTF_OpenFont("/home/dev/development/sdlDev/assets/fonts/KaBlam.ttf", 50);
@@ -25,18 +29,16 @@ void renderText(SDL_Renderer *renderer, Window &w)
         int text_width = textSurface->w;
         int text_height = textSurface->h;
         SDL_FreeSurface(textSurface);
-        SDL_Rect renderQuad = { GameParameters::windowSize.x/2-100, GameParameters::windowSize.y/2,200,50};
+        SDL_Rect renderQuad = {GameParameters::windowSize.x / 2 - 100, GameParameters::windowSize.y / 2, 200, 50};
         SDL_RenderCopy(renderer, text, NULL, &renderQuad);
         SDL_DestroyTexture(text);
         TTF_CloseFont(font);
-
     }
     else
     {
         fprintf(stderr, "error: font not found\n");
         exit(EXIT_FAILURE);
     }
-    
 }
 
 class Framework
@@ -89,16 +91,18 @@ int main(int argc, char *argv[])
                    GameParameters::paddleSize.y,
                    GameParameters::paddlePos.x,
                    GameParameters::windowSize.y - GameParameters::paddleSize.y);
-    HorizontalMoving mp(&rect,{GameParameters::paddleSpeed.x,GameParameters::paddleSpeed.x});
+    HorizontalMoving mp(&rect, {GameParameters::paddleSpeed.x, GameParameters::paddleSpeed.x});
     rect.setMovePolicy(&mp);
     rect.setColor(rect_color);
     rect.draw(fw.getRenderer());
     SDL_Event event; // Event variable
     RectangleGrid grid(w, GameParameters::gridSize.x, GameParameters::gridSize.y);
+    Uint32 frameStart, frameTime;
 
     while (!(event.type == SDL_QUIT))
     {
-        SDL_Delay(0);          // setting some Delay
+        frameStart = SDL_GetTicks();
+        SDL_Delay(20);         // setting some Delay
         SDL_PollEvent(&event); // Catching the poll event.
         switch (event.type)
         {
@@ -139,5 +143,10 @@ int main(int argc, char *argv[])
         SDL_RenderClear(fw.getRenderer());
         checkCollision(m, grid);
         checkCollision(m, rect);
+        frameTime = SDL_GetTicks() - frameStart;
+        if (frameTime < Delay)
+        {
+            SDL_Delay((int)(Delay - frameTime));
+        }
     }
 }

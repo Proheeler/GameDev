@@ -6,6 +6,7 @@ class Circle : public IShape
 public:
     Circle(int radius);
     Circle(int radius, int posX, int posY);
+    Circle(int width, int height, int posX, int posY);
     void draw(SDL_Renderer *renderer) override;
     void update(Window &window) override;
     int radius();

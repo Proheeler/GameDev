@@ -8,14 +8,14 @@
 #include <Circle.h>
 #include <RGBColor.h>
 #include <Window.h>
-#include <RectangleGrid.h>
 #include <Collisions.h>
 #include <GameParameters.h>
 #include <iostream>
 #include <HorizontalMoving.h>
-
+#include <Grid.h>
 constexpr const int FPS = 60;
 constexpr const int Delay = 1000.0 / FPS;
+
 
 void renderText(SDL_Renderer *renderer, Window &w)
 {
@@ -96,13 +96,13 @@ int main(int argc, char *argv[])
     rect.setColor(rect_color);
     rect.draw(fw.getRenderer());
     SDL_Event event; // Event variable
-    RectangleGrid grid(w, GameParameters::gridSize.x, GameParameters::gridSize.y);
+    Grid<Rectangle> grid(w, GameParameters::gridSize.x, GameParameters::gridSize.y);
     Uint32 frameStart, frameTime;
 
     while (!(event.type == SDL_QUIT))
     {
         frameStart = SDL_GetTicks();
-        SDL_Delay(20);         // setting some Delay
+//        SDL_Delay(20);         // setting some Delay
         SDL_PollEvent(&event); // Catching the poll event.
         switch (event.type)
         {
@@ -128,7 +128,7 @@ int main(int argc, char *argv[])
                 break;
             }
         }
-        if (grid.getRects()->empty())
+        if (grid.getFigures()->empty())
         {
             SDL_RenderClear(fw.getRenderer());
             renderText(fw.getRenderer(), w);
@@ -142,7 +142,14 @@ int main(int argc, char *argv[])
         SDL_RenderPresent(fw.getRenderer());
         SDL_RenderClear(fw.getRenderer());
         checkCollision(m, grid);
-        checkCollision(m, rect);
+        checkCollision(m, rect,[](Circle &circle,Rectangle& rectangle)
+        {
+            circle.m_speedY = -circle.m_speedY;
+            if (circle.x() < rectangle.x() + rectangle.width() / 2)
+                circle.m_speedX = -circle.m_speedX;
+            else
+                circle.m_speedX = circle.m_speedX;
+        });
         frameTime = SDL_GetTicks() - frameStart;
         if (frameTime < Delay)
         {

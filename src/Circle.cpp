@@ -7,7 +7,7 @@ Circle::Circle(int radius) : IShape(0,0,2*radius,2*radius),m_radius(radius) {}
 Circle::Circle(int radius, int posX, int posY) : IShape(posX,posY,2*radius,2*radius),m_radius(radius)
 {
 }
-Circle::Circle(int width,int height,int posX, int posY): IShape(posX,posY,width>>1,width>>1),m_radius(width>>1)
+Circle::Circle(int width,int height,int posX, int posY): IShape(posX-width/2,posY-height/2,width,width),m_radius(width>>1)
 {
 
 }

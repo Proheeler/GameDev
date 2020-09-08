@@ -8,13 +8,22 @@ Game::~Game()
 {
 }
 
-void Game::init() { m_bRunning = true; }
+void Game::init()
+{
+    m_bRunning = true;
+}
 
-void Game::render() {}
+void Game::render()
+{
+}
 
-void Game::update() {}
+void Game::update()
+{
+}
 
-void Game::handleEvents() {}
+void Game::handleEvents()
+{
+}
 
 void Game::clean() {}
 

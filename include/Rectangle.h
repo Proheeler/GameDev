@@ -1,14 +1,13 @@
 #pragma once
-#include "IShape.h"
 #include "IMovable.h"
-
-class Rectangle : public IShape
+#include <SDLGameObject.h>
+class Rectangle : public SDLGameObject
 {
 public:
-    Rectangle(int width, int height, int posX, int posY);
-    Rectangle(int width, int height);
-    void draw(SDL_Renderer *renderer) override;
-    void update(Window &window) override;
+    Rectangle();
+	virtual void draw();
+	virtual void update();
+	virtual void clean();
     void moveUp(Window &window);
     void moveDown(Window &window);
     void moveLeft(Window &window);

@@ -1,10 +1,10 @@
 #include <IMovable.h>
-
-IMovable::IMovable(IShape *shape):m_shape(shape)
+#include <SDLGameObject.h>
+IMovable::IMovable(SDLGameObject * shape):m_shape(shape)
 {
 
 }
 
-IShape *IMovable::shape(){
+SDLGameObject *IMovable::shape(){
     return m_shape;
 }

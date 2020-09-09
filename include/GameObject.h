@@ -5,9 +5,10 @@ class GameObject
 {
 protected:
 	GameObject() {}
-	virtual ~GameObject(){}
+
 
 public:
+    virtual ~GameObject(){}
 	virtual void draw() = 0;
 	virtual void update() = 0;
 	virtual void clean() = 0;

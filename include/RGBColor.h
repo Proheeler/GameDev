@@ -2,8 +2,8 @@
 #include <cstdint>
 struct RGBColor
 {
-    uint8_t r_channel;
-    uint8_t g_channel;
-    uint8_t b_channel;
-    uint8_t a_channel;
+    int r_channel;
+    int g_channel;
+    int b_channel;
+    int a_channel;
 };

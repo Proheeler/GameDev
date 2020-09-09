@@ -4,31 +4,23 @@
 #include <cmath>
 #include <Window.h>
 #include <RGBColor.h>
+#include <FrameWork.h>
+Rectangle::Rectangle()
+{
 
-Rectangle::Rectangle(int width, int height) : IShape(0,0,width,height) {}
+}
 
-
-Rectangle::Rectangle(int width, int height, int posX, int posY) : IShape(posX,posY,width,height)
+void Rectangle::draw()
+{
+    SDLGameObject::draw();
+}
+void Rectangle::update()
 {
 }
 
-void Rectangle::draw(SDL_Renderer *renderer)
+void Rectangle::clean()
 {
-    SDL_SetRenderDrawColor(renderer, getColor().r_channel, getColor().g_channel, getColor().b_channel, getColor().a_channel);
 
-    SDL_Rect r;
-    r.x = x();
-    r.y = y();
-    r.w = width();
-    r.h = height();
-
-    // Show the change on the screen
-    SDL_RenderFillRect(renderer, &r);
-    // SDL_RenderPresent(renderer);
-    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
-}
-void Rectangle::update(Window &window)
-{
 }
 
 void Rectangle::moveUp(Window &window)

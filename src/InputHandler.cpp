@@ -143,14 +143,14 @@ bool InputHandler::isKeyDown(SDL_Scancode key)
 {
 	if (m_keystates != NULL)
 	{
-		if (m_keystates[key] == 1)
-		{
-			return true;
-		}
-		else
-		{
-			return false;
-		}
+//		if (m_keystates[key] == 1)
+//		{
+//			return true;
+//		}
+//		else
+//		{
+//			return false;
+//		}
 	}
 	return false;
 }
@@ -158,7 +158,7 @@ bool InputHandler::isKeyDown(SDL_Scancode key)
 void InputHandler::update()
 {
 	SDL_Event event;
-	while (SDL_PollEvent(&event))
+    while (SDL_PollEvent(&event))
 	{
 		switch (event.type)
 		{

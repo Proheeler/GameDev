@@ -1,8 +1,9 @@
 #pragma once
-#include "IShape.h"
 #include <future>
 #include <vector>
 #include <Window.h>
+#include <SDL2/SDL.h>
+#include <RGBColor.h>
 template <typename FigureShape>
 class Grid
 {

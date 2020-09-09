@@ -1,7 +1,6 @@
 #include <HorizontalMoving.h>
-#include <IShape.h>
 #include <Window.h>
-HorizontalMoving::HorizontalMoving(IShape * shape,Speed speed):IMovable(shape),m_speed(speed)
+HorizontalMoving::HorizontalMoving(SDLGameObject * shape,Speed speed):IMovable(shape),m_speed(speed)
 {
 }
 
@@ -11,13 +10,13 @@ HorizontalMoving::~HorizontalMoving()
 
 void HorizontalMoving::moveLeft(Window &window)
 {
-    if (shape()->x() - m_speed.x > 0)
-        shape()->setX(shape()->x() - m_speed.x);
+    if (shape()->getPosition().getX() - m_speed.x > 0)
+        shape()->setPosition({shape()->getPosition().getX() - m_speed.x,shape()->getPosition().getY()});
 }
 void HorizontalMoving::moveRight(Window &window)
 {
-    if (shape()->x() + m_speed.x + shape()->width() <= window.width)
-        shape()->setX(shape()->x() + m_speed.x);
+    if (shape()->getPosition().getX() + m_speed.x + shape()->getWidth() <= window.width)
+        shape()->setPosition({shape()->getPosition().getX() + m_speed.x,shape()->getPosition().getY()});
 }
 void HorizontalMoving::moveUp(Window &window)
 {

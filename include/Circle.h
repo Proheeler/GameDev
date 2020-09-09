@@ -1,14 +1,16 @@
 #pragma once
-#include "IShape.h"
+#include <SDLGameObject.h>
 #include <GameParameters.h>
-class Circle : public IShape
+class Circle : public SDLGameObject
 {
 public:
-    Circle(int radius);
-    Circle(int radius, int posX, int posY);
-    Circle(int width, int height, int posX, int posY);
-    void draw(SDL_Renderer *renderer) override;
-    void update(Window &window) override;
+    Circle();
+    ~Circle(){}
+	void load(const LoaderParams * pParams);
+
+	virtual void draw();
+	virtual void update();
+	virtual void clean();
     int radius();
 
     int m_speedX = GameParameters::ballSpeed.x;

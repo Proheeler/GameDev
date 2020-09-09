@@ -1,16 +1,16 @@
 #pragma once
 
 struct Window;
-struct IShape;
+struct SDLGameObject;
 
 struct IMovable
 {
-    IMovable(IShape * shape);
+    IMovable(SDLGameObject *shape);
     virtual void moveLeft(Window &window) = 0;
     virtual void moveRight(Window &window) = 0;
     virtual void moveUp(Window &window) = 0;
     virtual void moveDown(Window &window) = 0;
-    IShape * shape();
+    SDLGameObject *shape();
 private:
-    IShape *m_shape = nullptr;
+    SDLGameObject *m_shape = nullptr;
 };

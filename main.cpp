@@ -13,11 +13,11 @@
 #include <iostream>
 #include <HorizontalMoving.h>
 #include <Grid.h>
-#include <FrameWork.h>
+
 #include <TextureManager.h>
 #include <Game.h>
 #include <MenuState.h>
-constexpr const int FPS = 10;
+constexpr const int FPS = 25;
 constexpr const int DELAY_TIME = 1000.0 / FPS;
 
 void renderText(SDL_Renderer *renderer, Window w)

@@ -5,6 +5,7 @@ const std::string PlayState::s_playID = "Play";
 
 void PlayState::update()
 {
+    
     // nothing for now
 }
 void PlayState::render()

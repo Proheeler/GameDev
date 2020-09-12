@@ -12,7 +12,7 @@ class Game
 	SDL_Renderer *m_pRenderer;
 
 	//GameObject array
-	std::vector<GameObject*> m_gameObjects;
+	// std::vector<GameObject*> m_gameObjects;
 	
 	int m_currentFrame;
 
@@ -21,8 +21,8 @@ class Game
 	//constructor is now private
 	Game():m_bRunning(false){}
     ~Game() {
-        for(size_t i = 0; i<m_gameObjects.size();++i)
-            delete m_gameObjects[i];
+        // for(size_t i = 0; i<m_gameObjects.size();++i)
+        //     delete m_gameObjects[i];
     }
 
 	//s_pInstance member variable

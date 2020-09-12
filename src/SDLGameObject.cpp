@@ -10,20 +10,24 @@ SDLGameObject::SDLGameObject(): GameObject()
 void SDLGameObject::draw()
 {
 //	TextureManager::Instance()->drawFrame(m_textureID, (int)m_position.getX(), (int)m_position.getY(), m_width, m_height, m_currentRow, m_currentFrame, TheGame::Instance()->getRenderer());
-    if (m_velocity.getX() > 0)
+    if (m_velocity.getX() != 0)
 	{
         TextureManager::Instance()->drawFrame(m_textureID, (Uint32)m_position.getX(), (Uint32)m_position.getY(), m_width, m_height, m_currentRow, m_currentFrame, TheGame::Instance()->getRenderer(), SDL_FLIP_HORIZONTAL);
+		++m_currentFrame;
+		m_currentFrame=(m_currentFrame==m_numFrames)?m_currentFrame%m_numFrames:m_currentFrame;
 	}
 	else
 	{
         TextureManager::Instance()->drawFrame(m_textureID, (Uint32)m_position.getX(), (Uint32)m_position.getY(), m_width, m_height, m_currentRow, m_currentFrame, TheGame::Instance()->getRenderer());
 	}
+
 }
 
 void SDLGameObject::update()
 {
 	m_velocity += m_acceleration;
 	m_position += m_velocity;
+	
 }
 
 void SDLGameObject::clean()

@@ -61,14 +61,6 @@ bool Game::init(const char *title, int xpos, int ypos, int width, int height, bo
      {
         std::cout<<"Ball not loaded"<<std::endl;
      }
-    Circle *circle = new Circle;
-    LoaderParams loadP(500,500,120,120,"fireball",6,0,2);
-    circle->load(&loadP);
-    m_gameObjects.push_back(circle);
-
-
-	
-
 	m_bRunning = true;	//everything inited successfully, start the main loop
     m_pGameStateMachine = new GameStateMachine();
     m_pGameStateMachine->pushState(new PlayState());
@@ -101,10 +93,6 @@ void Game::handleEvents()
 
 void Game::update()
 {
-    for(auto const &it:m_gameObjects)
-    {
-        it->update();
-    }
 	//use GameStateMachine's update function
 	m_pGameStateMachine->update();
 }
@@ -112,11 +100,7 @@ void Game::update()
 void Game::render()
 {
 	SDL_RenderClear(m_pRenderer); //clear the renderer to the draw color
-    for(auto const &it:m_gameObjects)
-    {
-//        std::cout << "drawing"<<std::endl;
-        it->draw();
-    }
+
 	//use GameStateMachine's render function
 	m_pGameStateMachine->render();
 

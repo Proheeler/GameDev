@@ -8,6 +8,8 @@
 Circle::Circle()
 {
     m_velocity = {10, 20};
+    m_numFrames=6;
+    // m_currentFrame=1;
     // m_acceleration = {10,10};
 }
 

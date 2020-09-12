@@ -51,12 +51,9 @@ int main(int argc, char *argv[])
 		{	
 
             frameStart = SDL_GetTicks();
-            GameStateMachine *state = TheGame::Instance()->getStateMachine();
-//            state->pushState(new MenuState());
 			TheGame::Instance()->handleEvents();
 			TheGame::Instance()->update();
 			TheGame::Instance()->render();
-//            state->popState();
 
 
 			frameTime = SDL_GetTicks() - frameStart;

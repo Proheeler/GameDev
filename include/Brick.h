@@ -1,10 +1,10 @@
 #pragma once
 #include "IMovable.h"
 #include <SDLGameObject.h>
-class Rectangle : public SDLGameObject
+class Brick : public SDLGameObject
 {
 public:
-    Rectangle();
+    Brick(int width,int height,int x,int y);
 	virtual void draw();
 	virtual void update();
 	virtual void clean();

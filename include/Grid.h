@@ -3,40 +3,50 @@
 #include <vector>
 #include <Window.h>
 #include <SDL2/SDL.h>
-#include <RGBColor.h>
-template <typename FigureShape>
-class Grid
+#include <SDLGameObject.h>
+#include <GameParameters.h>
+#include <Brick.h>
+class Grid:public SDLGameObject
 {
 private:
-    std::vector<FigureShape> m_shapes;
+    std::vector<Brick> m_shapes;
     int m_rows;
     int m_cols;
 
 public:
-    Grid(Window w, int rows, int cols) : m_rows(rows), m_cols(cols)
+    Grid(int rows, int cols) : m_rows(rows), m_cols(cols)
     {
         int offset = 1;
-        int width = w.width / cols;
-        int height = w.height / (2 * rows);
+        int width = GameParameters::windowSize.x / cols;
+        int height = GameParameters::windowSize.y / (2 * rows);
         for (int i = 0; i < cols; ++i)
         {
             for (int j = 0; j < rows; ++j)
             {
-                FigureShape tmpFig(width - offset, height - offset, width * i, j * height);
-                RGBColor rect_color{(rand() % 255) + 1, (rand() % 255) + 1, (rand() % 255) + 1};
-                tmpFig.setColor(rect_color);
+                Brick tmpFig(width - offset, height - offset, width * i, j * height);;
+                // RGBColor rect_color{(rand() % 255) + 1, (rand() % 255) + 1, (rand() % 255) + 1};
+                // tmpFig.setColor(rect_color);
                 m_shapes.push_back(tmpFig);
             }
         }
     }
-    void draw(SDL_Renderer *w)
+    virtual void draw()
     {
         for (auto &it : m_shapes)
         {
-            it.draw(w);
+            it.draw();
         }
     }
-    std::vector<FigureShape> *getFigures()
+	virtual void update()
+    {
+
+    }
+	virtual void clean()
+    {
+
+    }
+
+    std::vector<Brick> *getFigures()
     {
         return &m_shapes;
     }

@@ -12,6 +12,8 @@ public:
 	virtual void update();
 	virtual void clean();
     int radius();
+    void setSpeedX();
+    void setSpeedY();
 
     int m_speedX = GameParameters::ballSpeed.x;
     int m_speedY = GameParameters::ballSpeed.y;

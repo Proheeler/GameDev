@@ -1,5 +1,5 @@
+#pragma once
 #include "Circle.h"
-#include "Rectangle.h"
 #include <algorithm>
 #include "Grid.h"
 template <typename T>
@@ -11,39 +11,41 @@ T clamp(T val, T min, T max)
         val = max;
     return val;
 }
-template<typename FigureShape_1,typename FigureShape_2>
-bool isIntersecting(FigureShape_1 &circle, FigureShape_2 rectangle) noexcept
+// template <typename FigureShape_1, typename FigureShape_2>
+inline bool isIntersecting(SDLGameObject *circle, SDLGameObject* rectangle) noexcept
 {
-    auto DeltaX = circle.x() - std::max(rectangle.x(), std::min(circle.x(), rectangle.x() + +rectangle.width()));
-    auto DeltaY = circle.y() - std::max(rectangle.y(), std::min(circle.y(), rectangle.y() + rectangle.height()));
-    bool ret = (DeltaX * DeltaX + DeltaY * DeltaY) < (circle.radius() * circle.radius());
+    auto DeltaX = circle->getPosition().getX() - std::max(rectangle->getPosition().getX(), std::min(circle->getPosition().getX(), rectangle->getPosition().getX() + rectangle->getWidth()));
+    auto DeltaY = circle->getPosition().getX() - std::max(rectangle->getPosition().getY(), std::min(circle->getPosition().getY(), rectangle->getPosition().getY() + rectangle->getHeight()));
+    bool ret = (DeltaX * DeltaX + DeltaY * DeltaY) < (circle->getWidth() * circle->getWidth());
     return ret;
 }
 
-template <typename FigureShape_1,typename FigureShape_2>
-void checkCollision(FigureShape_1 &circle, Grid<FigureShape_2> &grid)
+inline void checkCollision(Circle *circle, Grid *grid)
 {
-    std::vector<FigureShape_2> *rects = grid.getFigures();
+    std::vector<Brick> *rects = grid->getFigures();
     if (!rects->empty())
     {
         rects->erase(std::remove_if(rects->begin(), rects->end(),
-                                    [&circle](FigureShape_2 shape) {
-                                        bool ret = isIntersecting(circle, shape);
+                                    [&circle](Brick shape) {
+                                        bool ret = isIntersecting(circle, &shape);
                                         if (ret)
                                         {
-                                            circle.m_speedX = -circle.m_speedX;
-                                            circle.m_speedY = -circle.m_speedY;
+                                            circle->setSpeedX();//->m_speedX = -circle->m_speedX;
+                                            circle->setSpeedY();//->m_speedY = -circle->m_speedY;
                                         }
                                         return ret;
                                     }),
                      rects->end());
     }
 }
-template <typename FigureShape,typename Action>
-void checkCollision(Circle &circle, FigureShape &rectangle,Action logicAction)
+inline void checkCollision(Circle *circle, Brick *rectangle)
 {
     if (isIntersecting(circle, rectangle))
     {
-        logicAction(circle,rectangle);
+        circle->setSpeedY();
+        if (circle->getPosition().getX() < rectangle->getPosition().getX() + rectangle->getWidth() / 2)
+            circle->setSpeedX();//->m_speedX = -circle->m_speedX;
+        // else//
+        //     circle->m_speedX = circle->m_speedX;
     }
 }

@@ -3,8 +3,6 @@
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_timer.h>
 #include <SDL2/SDL_ttf.h>
-// #include <SDL2/>
-#include <Rectangle.h>
 #include <Circle.h>
 #include <RGBColor.h>
 #include <Window.h>

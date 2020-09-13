@@ -1,5 +1,5 @@
 #include "GameState.h"
-#include "GameObject.h"
+#include "SDLGameObject.h"
 #include <vector>
 class PlayState : public GameState
 {
@@ -12,5 +12,5 @@ public:
 
 private:
     static const std::string s_playID;
-    std::vector<GameObject*> m_gameObjects;
+    std::vector<SDLGameObject*> m_gameObjects;
 };
